@@ -9,7 +9,7 @@ import numpy as np
 df = pd.read_excel('Review_ratings.xlsx')
 data = {}
 user = 0
-threshold = 5.0
+threshold = float(input("Enter the threshold distance for determining the outliers"))
 for ind, row in df.iterrows():
     user += 1
     categories = [
@@ -46,8 +46,8 @@ list45 = [0.57, 0.58, 5, 3.73, 3.78, 2.95, 2.94, 2.96, 1.63, 1.63, 5, 1.55, 1.54
 
 
 def pick_initial_centroid(k):  # returns random centroids {'C123':[x,y,....,z]} used as initial centroids
-    # points = random.sample(range(1, 1001), k)
-    points = [470, 159, 502]
+    points = random.sample(range(1, 1001), k)
+    # points = [470, 159, 502]
     lis = {}
     for point in points:
         name = "C" + str(point)
@@ -60,9 +60,6 @@ def distance_between_categories(centroid, point):  # distance between 2 points
     for i in range(len(point)):
         distance += (float(centroid[i]) - point[i]) ** 2
     return math.sqrt(distance)
-
-
-# centroids = pick_initial_centroid(3)
 
 
 def calculate_distances_of_data(centroids):  # calculate the distances centroids and all the points in the data set
@@ -166,18 +163,6 @@ def needs_iteration(old_cluster, new_cluster, centroids):
     old = []
     new = []
 
-    # for centroid, list_of_dictionaries in copy.deepcopy(old_cluster):  # adds the points of the old cluster to a dict
-    #     old[centroid] = []
-    #     for dictionary in list_of_dictionaries:
-    #         key, value = dictionary.popitem()
-    #         old[centroid].append(key)
-    #
-    # for centroid, list_of_dictionaries in copy.deepcopy(new_cluster):   # adds the points of the new cluster to a dict
-    #     new[centroid] = []
-    #     for dictionary in list_of_dictionaries:
-    #         key, value = dictionary.popitem()
-    #         new[centroid].append(key)
-
     for centroid in centroids_list:
         old_temp_list = []
         new_temp_list = []
@@ -193,11 +178,6 @@ def needs_iteration(old_cluster, new_cluster, centroids):
         return False
     else:
         return True
-
-
-# print(calculate_distances_of_data())
-# print(json.dumps(cluster(calculate_distances_of_data(), centroids), indent=4))
-# print(centroids)
 
 
 def k_means():
@@ -222,17 +202,5 @@ print(json.dumps(clusters_))
 print()
 print("outliers:")
 print(json.dumps(outliers_))
-# print(data)
 
-inp = [
-    {"1": [0.0, 0.0, 3.63, 3.65, 5.0, 2.92, 5.0, 2.35, 2.33, 2.64, 1.7, 1.69, 1.7, 1.72, 1.74, 0.59, 0.5, 0.0, 0.5, 0.0,
-           0.0, 0.0, 0.0, 0.0]},
-
-    {"2": [0.0, 0.0, 3.63, 3.65, 5.0, 2.92, 5.0, 2.64, 2.33, 2.65, 1.7, 1.69, 1.7, 1.72, 1.74, 0.59, 0.5, 0.0, 0.5, 0.0,
-           0.0, 0.0, 0.0, 0.0]},
-
-    {"3": [0.0, 0.0, 3.63, 3.63, 5.0, 2.92, 5.0, 2.64, 2.33, 2.64, 1.7, 1.69, 1.7, 1.72, 1.74, 0.59, 0.5, 0.0, 0.5, 0.0,
-           0.0, 0.0, 0.0, 0.0]},
-]
-# print(calculate_average_point(inp))
 
